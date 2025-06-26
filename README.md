@@ -6,7 +6,7 @@ This repository contains:
 
 ## Files
 
-- `numpy_functions_examples.py  
+- numpy_functions_examples.py  
   → Contains annotated Python code demonstrating the use of major NumPy functions.
 
 - NumPy-Array-Creation-and-Manipulation  
@@ -23,4 +23,4 @@ These resources aim to:
 
 Feel free to explore, use, and contribute!
 
-🌟 *By Dorira Mohamed| https://www.linkedin.com/in/dorira-mohamed-abab6230b/
+🌟  By Dorira Mohamed | https://www.linkedin.com/in/dorira-mohamed-abab6230b/
