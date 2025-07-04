@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programming Concepts for Data Science</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 40px;
+            font-size: 1.2em;
+        }
+
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .concept-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .concept-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            border-color: #667eea;
+        }
+
+        .concept-card.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-color: #667eea;
+        }
+
+        .concept-title {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+        }
+
+        .concept-card.active .concept-title {
+            color: white;
+        }
+
+        .concept-icon {
+            font-size: 2em;
+            margin-right: 15px;
+        }
+
+        .concept-description {
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .concept-card.active .concept-description {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .concept-example {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            border-left: 4px solid #667eea;
+        }
+
+        .concept-card.active .concept-example {
+            background: rgba(255, 255, 255, 0.1);
+            border-left-color: white;
+        }
+
+        .flow-diagram {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .flow-title {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+        }
+
+        .flow-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .flow-step {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 10px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .flow-step:hover {
+            transform: scale(1.05);
+        }
+
+        .flow-step::after {
+            content: '→';
+            position: absolute;
+            right: -25px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5em;
+            color: #667eea;
+        }
+
+        .flow-step:last-child::after {
+            display: none;
+        }
+
+        .example-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .example-title {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        .code-example {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+
+        .code-comment {
+            color: #95a5a6;
+        }
+
+        .code-keyword {
+            color: #3498db;
+        }
+
+        .code-string {
+            color: #e74c3c;
+        }
+
+        .code-number {
+            color: #f39c12;
+        }
+
+        .interactive-quiz {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .quiz-question {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .quiz-options {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .quiz-option {
+            padding: 15px;
+            border: 2px solid #ecf0f1;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .quiz-option:hover {
+            border-color: #667eea;
+            background: #e3f2fd;
+        }
+
+        .quiz-option.correct {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+
+        .quiz-option.incorrect {
+            background: #f8d7da;
+            border-color: #dc3545;
+        }
+
+        .quiz-feedback {
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .quiz-feedback.show {
+            display: block;
+        }
+
+        .quiz-feedback.correct {
+            background: #d4edda;
+            border: 1px solid #28a745;
+            color: #155724;
+        }
+
+        .quiz-feedback.incorrect {
+            background: #f8d7da;
+            border: 1px solid #dc3545;
+            color: #721c24;
+        }
+
+        .cta-section {
+            text-align: center;
+            margin-top: 50px;
+            padding: 40px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 15px;
+        }
+
+        .cta-title {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .cta-text {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .share-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .share-btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .share-btn.linkedin {
+            background: #0077b5;
+            color: white;
+        }
+
+        .share-btn.kaggle {
+            background: #20beff;
+            color: white;
+        }
+
+        .share-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .flow-steps {
+                flex-direction: column;
+            }
+            
+            .flow-step::after {
+                content: '↓';
+                right: 50%;
+                bottom: -25px;
+                top: auto;
+                transform: translateX(50%);
+            }
+            
+            .concept-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Programming Concepts for Data Science</h1>
+        <p class="subtitle">Master the Building Blocks: Library → Class → Function → Method</p>
+
+        <div class="concept-grid">
+            <div class="concept-card" onclick="toggleCard(this)">
+                <div class="concept-title">
+                    <span class="concept-icon">📚</span>
+                    Library
+                </div>
+                <div class="concept-description">
+                    A collection of pre-written code that provides functionality for common tasks. Libraries save time by offering ready-made solutions.
+                </div>
+                <div class="concept-example">
+                    import numpy as np
+                    import pandas as pd
+                    # Reusing thousands of lines of optimized code!
+                </div>
+            </div>
+
+            <div class="concept-card" onclick="toggleCard(this)">
+                <div class="concept-title">
+                    <span class="concept-icon">🏗️</span>
+                    Class
+                </div>
+                <div class="concept-description">
+                    A blueprint for creating objects that represent real-world entities. Classes group data and behaviors together.
+                </div>
+                <div class="concept-example">
+                    class DataScientist:
+                        def __init__(self, name):
+                            self.name = name
+                        def analyze_data(self):
+                            return "Analyzing..."
+                </div>
+            </div>
+
+            <div class="concept-card" onclick="toggleCard(this)">
+                <div class="concept-title">
+                    <span class="concept-icon">⚙️</span>
+                    Function
+                </div>
+                <div class="concept-description">
+                    A reusable block of code that performs a specific task. Functions make code modular and avoid repetition.
+                </div>
+                <div class="concept-example">
+                    def calculate_mean(data):
+                        return sum(data) / len(data)
+                    
+                    # Reuse anywhere!
+                    result = calculate_mean([1, 2, 3, 4, 5])
+                </div>
+            </div>
+
+            <div class="concept-card" onclick="toggleCard(this)">
+                <div class="concept-title">
+                    <span class="concept-icon">🔧</span>
+                    Method
+                </div>
+                <div class="concept-description">
+                    A function that belongs to a specific object/class. Methods define what actions an object can perform.
+                </div>
+                <div class="concept-example">
+                    arr = np.array([1, 2, 3, 4, 5])
+                    result = arr.sum()  # sum() is a method
+                    reshaped = arr.reshape(5, 1)  # reshape() is a method
+                </div>
+            </div>
+        </div>
+
+        <div class="flow-diagram">
+            <h2 class="flow-title">🔄 How Each Concept Builds on the Next</h2>
+            <div class="flow-steps">
+                <div class="flow-step">
+                    <h3>📚 Library</h3>
+                    <p>Collections of reusable code</p>
+                </div>
+                <div class="flow-step">
+                    <h3>🏗️ Class</h3>
+                    <p>Organized structures within libraries</p>
+                </div>
+                <div class="flow-step">
+                    <h3>⚙️ Function</h3>
+                    <p>Building blocks of classes</p>
+                </div>
+                <div class="flow-step">
+                    <h3>🔧 Method</h3>
+                    <p>Object-specific functions</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h2 class="example-title">🧠 Real-World Example: NumPy in Action</h2>
+            
+            <div class="code-example">
+<span class="code-comment"># 1. Problem: Pure Python is slow for numerical operations</span>
+slow_list = [1, 2, 3, 4, 5]
+result = sum(x**2 for x in slow_list)  <span class="code-comment"># Slow!</span>
+
+<span class="code-comment"># 2. Solution: Use NumPy library (written in C)</span>
+<span class="code-keyword">import</span> numpy <span class="code-keyword">as</span> np
+
+<span class="code-comment"># 3. NumPy's ndarray Class defines how arrays behave</span>
+<span class="code-comment"># 4. np.array() is a Function that creates array objects</span>
+fast_array = np.array([<span class="code-number">1</span>, <span class="code-number">2</span>, <span class="code-number">3</span>, <span class="code-number">4</span>, <span class="code-number">5</span>])
+
+<span class="code-comment"># 5. Methods like .sum() and .reshape() belong to the array object</span>
+total = fast_array.sum()        <span class="code-comment"># Method: belongs to the array</span>
+squared = fast_array ** <span class="code-number">2</span>        <span class="code-comment"># Broadcasting magic!</span>
+reshaped = fast_array.reshape(<span class="code-number">5</span>, <span class="code-number">1</span>)  <span class="code-comment"># Method: changes shape</span>
+            </div>
+        </div>
+
+        <div class="interactive-quiz">
+            <h2 class="quiz-question">🎯 Quick Knowledge Check</h2>
+            <p>What is <code>np.array()</code> in the context of NumPy?</p>
+            
+            <div class="quiz-options">
+                <div class="quiz-option" onclick="selectOption(this, false)">
+                    A method that belongs to an array object
+                </div>
+                <div class="quiz-option" onclick="selectOption(this, false)">
+                    A class that defines array behavior
+                </div>
+                <div class="quiz-option" onclick="selectOption(this, true)">
+                    A function that creates array objects
+                </div>
+                <div class="quiz-option" onclick="selectOption(this, false)">
+                    A library for numerical computing
+                </div>
+            </div>
+            
+            <div class="quiz-feedback" id="feedback"></div>
+        </div>
+
+        <div class="cta-section">
+            <h2 class="cta-title">🌟 Ready to Master Data Science?</h2>
+            <p class="cta-text">Understanding these core concepts is your first step to becoming a data science expert. Share this knowledge and help others in their journey!</p>
+            
+            <div class="share-buttons">
+                <a href="#" class="share-btn linkedin" onclick="shareToLinkedIn()">
+                    📘 Share on LinkedIn
+                </a>
+                <a href="#" class="share-btn kaggle" onclick="shareToKaggle()">
+                    🏆 Share on Kaggle
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleCard(card) {
+            // Remove active class from all cards
+            document.querySelectorAll('.concept-card').forEach(c => c.classList.remove('active'));
+            
+            // Add active class to clicked card
+            card.classList.add('active');
+            
+            // Add a subtle animation
+            card.style.transform = 'scale(1.02)';
+            setTimeout(() => {
+                card.style.transform = '';
+            }, 200);
+        }
+
+        function selectOption(option, isCorrect) {
+            // Remove previous selections
+            document.querySelectorAll('.quiz-option').forEach(opt => {
+                opt.classList.remove('correct', 'incorrect');
+            });
+            
+            // Mark the selected option
+            if (isCorrect) {
+                option.classList.add('correct');
+                showFeedback(true);
+            } else {
+                option.classList.add('incorrect');
+                // Also highlight the correct answer
+                document.querySelectorAll('.quiz-option')[2].classList.add('correct');
+                showFeedback(false);
+            }
+        }
+
+        function showFeedback(isCorrect) {
+            const feedback = document.getElementById('feedback');
+            feedback.classList.add('show');
+            
+            if (isCorrect) {
+                feedback.className = 'quiz-feedback show correct';
+                feedback.innerHTML = '🎉 Correct! np.array() is indeed a function in the NumPy library that creates array objects. These objects then have methods like .sum() and .reshape().';
+            } else {
+                feedback.className = 'quiz-feedback show incorrect';
+                feedback.innerHTML = '❌ Not quite right. np.array() is a function that creates array objects. The array objects then have methods like .sum() and .reshape() that can be called on them.';
+            }
+        }
+
+        function shareToLinkedIn() {
+            const text = "🚀 Just learned about the core programming concepts for Data Science! Understanding Libraries, Classes, Functions, and Methods is crucial for mastering tools like NumPy and Pandas. Check out this interactive guide! #DataScience #Python #Programming #Learning";
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}&summary=${encodeURIComponent(text)}`, '_blank');
+        }
+
+        function shareToKaggle() {
+            const text = "🏆 Mastering Data Science fundamentals: Libraries, Classes, Functions, and Methods explained with NumPy examples! Essential knowledge for every aspiring data scientist.";
+            // Note: Kaggle doesn't have a direct sharing API, so we'll copy to clipboard
+            navigator.clipboard.writeText(text + '\n\n' + window.location.href).then(() => {
+                alert('📋 Content copied to clipboard! You can now paste it in your Kaggle discussion or notebook.');
+            });
+        }
+
+        // Add some interactive animations on page load
+        window.addEventListener('load', function() {
+            const cards = document.querySelectorAll('.concept-card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    card.style.transition = 'all 0.5s ease';
+                    
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 100);
+                }, index * 150);
+            });
+        });
+    </script>
+</body>
+</html>
